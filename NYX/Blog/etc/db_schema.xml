@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	 <table name="nyx_blog_post" resource="default" comment="List of Post"  engine="innodb" >
+        <column xsi:type="int" name="post_id" identity="true" comment="Post Auto Increment (entity_id)" />
+        <column xsi:type="timestamp" name="created_at" comment="Post Created At" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="timestamp" name="updated_at" comment="Post Updated At" default="CURRENT_TIMESTAMP"/>
+        <column xsi:type="varchar" name="post_title" length="150" nullable="false" comment="Post Title" />
+        <column xsi:type="varchar" name="post_details" length="1024" nullable="false" comment="Post Details" />
+        <column xsi:type="varchar" name="post_file" length="100" nullable="false" comment="Post File" />
+        <column xsi:type="varchar" name="post_email" length="200" nullable="false" comment="Post Email" />
+        <column xsi:type="int" name="post_is_active" nullable="false" comment="Is Active" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="post_id" />
+        </constraint>
+    </table>
+</schema>
