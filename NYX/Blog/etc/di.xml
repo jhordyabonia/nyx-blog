@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="NYX\Blog\Api\Data\PostSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+
+    <preference for="NYX\Blog\Api\Data\PostInterface"
+                type="NYX\Blog\Model\Post"/>
+
+    <preference for="NYX\Blog\Api\PostRepositoryInterface"
+                type="\NYX\Blog\Model\PostRepository"/>
+
+</config>
