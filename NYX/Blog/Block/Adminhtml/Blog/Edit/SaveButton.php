@@ -2,7 +2,9 @@
 
 namespace NYX\Blog\Block\Adminhtml\Blog\Edit;
 
-class SaveButton extends GenericButton implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
+use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+
+class SaveButton extends GenericButton implements ButtonProviderInterface
 {
 
     /**
