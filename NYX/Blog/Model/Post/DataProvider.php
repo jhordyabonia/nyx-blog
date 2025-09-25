@@ -4,7 +4,7 @@ namespace NYX\Blog\Model\Post;
 
 use Magento\Framework\UrlInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use MAgento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\App\Request\DataPersistorInterface;
 use NYX\Blog\Model\ResourceModel\Post\CollectionFactory;
 
 class DataProvider extends \Magento\Ui\DataProvider\AbstractDataProvider
