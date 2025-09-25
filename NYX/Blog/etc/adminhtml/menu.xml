@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="NYX_Blog::post"
+             title="Blog NYX" translate="title"
+             module="NYX_Blog" sortOrder="80"
+             parent="Magento_Backend::content_elements"
+             action="blog/post/index"
+             resource="NYX_Blog::post"/>
+
+        <!--<remove id="Magento_Marketplace::partners"/>-->
+        <!--<update id="Magento_Backend::content_elements" parent="Magento_Catalog::catalog"/>-->
+
+    </menu>
+</config>
