@@ -5,46 +5,46 @@ namespace NYX\Blog\Model;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use NYX\Blog\Api\PostRepositoryInterface;
-use NYX\Blog\Model\ResourceModel\Post;
-use NYX\Blog\Model\PostFactory;
+use NYX\Blog\Api\CommentRepositoryInterface;
+use NYX\Blog\Model\ResourceModel\Comment;
+use NYX\Blog\Model\CommentFactory;
 use Magento\Framework\Api\SearchCriteriaInterface;
-use NYX\Blog\Api\Data\PostInterface;
-use NYX\Blog\Api\Data\PostSearchResultsInterface;
+use NYX\Blog\Api\Data\CommentInterface;
+use NYX\Blog\Api\Data\CommentSearchResultsInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Api\SearchResultsInterface;
-use NYX\Blog\Api\Data\PostInterfaceFactory;
-use NYX\Blog\Api\Data\PostSearchResultsInterfaceFactory;
-use NYX\Blog\Model\ResourceModel\Post as PostResource;
-use NYX\Blog\Model\ResourceModel\Post\CollectionFactory;
+use NYX\Blog\Api\Data\CommentInterfaceFactory;
+use NYX\Blog\Api\Data\CommentSearchResultsInterfaceFactory;
+use NYX\Blog\Model\ResourceModel\Comment as CommentResource;
+use NYX\Blog\Model\ResourceModel\Comment\CollectionFactory;
 use Magento\Framework\Api\DataObjectHelper;
 use Magento\Framework\Reflection\DataObjectProcessor;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\App\ObjectManager;
 /**
- * Class PostRepository
+ * Class CommentRepository
  * @package NYX\Blog\Model
  */
-class PostRepository implements PostRepositoryInterface
+class CommentRepository implements CommentRepositoryInterface
 {
     /**
-     * @var ResourceModel\Post
+     * @var ResourceModel\Comment
      */
     private $resource;
     /**
-     * @var PostFactory
+     * @var CommentFactory
      */
-    private $postFactory;
+    private $commentFactory;
     /**
-     * @var \NYX\Blog\Api\Data\PostInterfaceFactory
+     * @var \NYX\Blog\Api\Data\CommentInterfaceFactory
      */
-    private $dataPostFactory;
+    private $dataCommentFactory;
     /**
-     * @var ResourceModel\Post\CollectionFactory
+     * @var ResourceModel\Comment\CollectionFactory
      */
-    private $postCollectionFactory;
+    private $commentCollectionFactory;
     /**
-     * @var \NYX\Blog\Api\Data\PostSearchResultsInterfaceFactory
+     * @var \NYX\Blog\Api\Data\CommentSearchResultsInterfaceFactory
      */
     private $searchResultsFactory;
     /**
@@ -61,20 +61,20 @@ class PostRepository implements PostRepositoryInterface
     private $collectionProcessor;
 
     public function __construct(
-        Post $resource,
-        PostFactory $postFactory,
-        PostInterfaceFactory $dataPostFactory,
-        Post\CollectionFactory $postCollectionFactory,
-        PostSearchResultsInterfaceFactory $searchResultsFactory,
+        Comment $resource,
+        CommentFactory $commentFactory,
+        CommentInterfaceFactory $dataCommentFactory,
+        Comment\CollectionFactory $commentCollectionFactory,
+        CommentSearchResultsInterfaceFactory $searchResultsFactory,
         DataObjectHelper $dataObjectHelper,
         DataObjectProcessor $dataObjectProcessor,
         CollectionProcessorInterface $collectionProcessor = null
     )
     {
         $this->resource = $resource;
-        $this->postFactory = $postFactory;
-        $this->dataPostFactory = $dataPostFactory;
-        $this->postCollectionFactory = $postCollectionFactory;
+        $this->commentFactory = $commentFactory;
+        $this->dataCommentFactory = $dataCommentFactory;
+        $this->commentCollectionFactory = $commentCollectionFactory;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->dataObjectHelper = $dataObjectHelper;
         $this->dataObjectProcessor = $dataObjectProcessor;
@@ -82,57 +82,57 @@ class PostRepository implements PostRepositoryInterface
     }
 
     /**
-     * Save post.
+     * Save comment.
      *
-     * @param PostInterface $post
-     * @return PostInterface
+     * @param CommentInterface $comment
+     * @return CommentInterface
      * @throws LocalizedException
      */
-    public function save(PostInterface $post)
+    public function save(CommentInterface $comment)
     {
         try {
-            $this->resource->save($post);
+            $this->resource->save($comment);
         } catch (\Exception $exception) {
             throw new CouldNotSaveException(
-                __('Could not save the post: %1', $exception->getMessage()),
+                __('Could not save the comment: %1', $exception->getMessage()),
                 $exception
             );
         }
-        return $post;
+        return $comment;
     }
 
     /**
-     * Retrieve post.
+     * Retrieve comment.
      *
-     * @param int $postId
-     * @return PostInterface
+     * @param int $commentId
+     * @return CommentInterface
      * @throws LocalizedException
      */
-    public function getById($postId)
+    public function getById($commentId)
     {
-        $post = $this->postFactory->create();
-        $post->load($postId);
-        if (!$post->getId()) {
-            throw new NoSuchEntityException(__('Post with id "%1" does not exist.', $postId));
+        $comment = $this->commentFactory->create();
+        $comment->load($commentId);
+        if (!$comment->getId()) {
+            throw new NoSuchEntityException(__('Comment with id "%1" does not exist.', $commentId));
         }
-        return $post;
+        return $comment;
     }
 
     /**
-     * Retrieve posts matching the specified criteria.
+     * Retrieve comments matching the specified criteria.
      *
      * @param SearchCriteriaInterface $searchCriteria
-     * @return PostSearchResultsInterface
+     * @return CommentSearchResultsInterface
      * @throws LocalizedException
      */
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
         /** @var \NYX\Blog\Model\ResourceModel\Block\Collection $collection */
-        $collection = $this->postCollectionFactory->create();
+        $collection = $this->commentCollectionFactory->create();
 
         $this->collectionProcessor->process($searchCriteria, $collection);
 
-        /** @var PostSearchResultsInterface $searchResults */
+        /** @var CommentSearchResultsInterface $searchResults */
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($searchCriteria);
         $searchResults->setItems($collection->getItems());
@@ -141,19 +141,19 @@ class PostRepository implements PostRepositoryInterface
     }
 
     /**
-     * Delete post.
+     * Delete comment.
      *
-     * @param PostInterface $post
+     * @param CommentInterface $comment
      * @return bool true on success
      * @throws LocalizedException
      */
-    public function delete(PostInterface $post)
+    public function delete(CommentInterface $comment)
     {
         try {
-            $this->resource->delete($post);
+            $this->resource->delete($comment);
         } catch (\Exception $exception) {
             throw new CouldNotDeleteException(__(
-                'Could not delete post: %1',
+                'Could not delete comment: %1',
                 $exception->getMessage()
             ));
         }
@@ -161,16 +161,16 @@ class PostRepository implements PostRepositoryInterface
     }
 
     /**
-     * Delete post by ID.
+     * Delete comment by ID.
      *
-     * @param int $postId
+     * @param int $commentId
      * @return bool true on success
      * @throws NoSuchEntityException
      * @throws LocalizedException
      */
-    public function deleteById($postId)
+    public function deleteById($commentId)
     {
-        return $this->delete($this->getById($postId));
+        return $this->delete($this->getById($commentId));
     }
 
     /**
