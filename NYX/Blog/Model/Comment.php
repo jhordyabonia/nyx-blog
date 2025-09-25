@@ -23,19 +23,14 @@ class Comment extends AbstractExtensibleModel implements CommentInterface
         return $this->getData(self::POST_ID);
     }
 
-    public function getAuthor()
+    public function getCommentAuthor()
     {
-        return $this->getData(self::AUTHOR);
+        return $this->getData(self::COMMENT_AUTHOR);
     }
 
-    public function getEmail()
+    public function getCommentBody()
     {
-        return $this->getData(self::EMAIL);
-    }
-
-    public function getContent()
-    {
-        return $this->getData(self::CONTENT);
+        return $this->getData(self::COMMENT_BODY);
     }
 
     public function isApproved()
@@ -64,19 +59,14 @@ class Comment extends AbstractExtensibleModel implements CommentInterface
         return $this->setData(self::POST_ID, $postId);
     }
 
-    public function setAuthor($author)
+    public function setCommentAuthor($author)
     {
-        return $this->setData(self::AUTHOR, $author);
+        return $this->setData(self::COMMENT_AUTHOR, $author);
     }
 
-    public function setEmail($email)
+    public function setCommentBody($content)
     {
-        return $this->setData(self::EMAIL, $email);
-    }
-
-    public function setContent($content)
-    {
-        return $this->setData(self::CONTENT, $content);
+        return $this->setData(self::COMMENT_BODY, $content);
     }
 
     public function setApproved($isApproved)

@@ -6,9 +6,8 @@ interface CommentInterface
 {
     const COMMENT_ID = 'comment_id';
     const POST_ID = 'post_id';
-    const AUTHOR = 'author';
-    const EMAIL = 'email';
-    const CONTENT = 'content';
+    const COMMENT_AUTHOR = 'comment_author';
+    const COMMENT_BODY = 'comment_body';
     const IS_APPROVED = 'is_approved';
     const CREATED_AT = 'created_at';
     const UPDATED_AT = 'updated_at';
@@ -20,13 +19,10 @@ interface CommentInterface
     public function getPostId();
 
     /** @return string */
-    public function getAuthor();
+    public function getCommentAuthor();
 
     /** @return string */
-    public function getEmail();
-
-    /** @return string */
-    public function getContent();
+    public function getCommentBody();
 
     /** @return int|string */
     public function isApproved();
@@ -50,17 +46,12 @@ interface CommentInterface
     /** @param string $author
      * @return $this
      */
-    public function setAuthor($author);
-
-    /** @param string $email
-     * @return $this
-     */
-    public function setEmail($email);
+    public function setCommentAuthor($author);
 
     /** @param string $content
      * @return $this
      */
-    public function setContent($content);
+    public function setCommentBody($content);
 
     /** @param int $isApproved
      * @return $this

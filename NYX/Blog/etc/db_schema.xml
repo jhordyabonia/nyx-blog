@@ -13,12 +13,13 @@
             <column name="post_id" />
         </constraint>
     </table>
-    <table name="nyx_blog_post_comments" resource="default" comment="List of Post Comments"  engine="innodb" >
+    <table name="nyx_blog_post_comment" resource="default" comment="List of Post Comments"  engine="innodb" >
         <column xsi:type="int" name="comment_id" identity="true" comment="Comment Auto Increment (entity_id)" />
         <column xsi:type="timestamp" name="created_at" comment="Comment Created At" default="CURRENT_TIMESTAMP"/>
         <column xsi:type="timestamp" name="updated_at" comment="Comment Updated At" default="CURRENT_TIMESTAMP"/>
         <column xsi:type="varchar" name="comment_author" length="150" nullable="false" comment="Comment Author" />
         <column xsi:type="text" name="comment_body" nullable="false" comment="Comment Body" />
+        <column xsi:type="int" name="is_approved" nullable="false" comment="Is Approved" />
         <column xsi:type="int" name="post_id" nullable="false" comment="Related Post ID" />
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="comment_id" />
