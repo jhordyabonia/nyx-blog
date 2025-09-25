@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+				<resource id="NYX_Blog::post" sortOrder="10" title="NYX Blog">
+                    <resource id="NYX_Blog::view" title="List and view of Post" sortOrder="110" />
+                    <resource id="NYX_Blog::delete" title="Delete Post" sortOrder="120" />
+                    <resource id="NYX_Blog::save" title="Create Post" sortOrder="130" />
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
