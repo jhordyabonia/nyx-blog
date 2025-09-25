@@ -1,0 +1,18 @@
+type Query {
+    
+    blog (
+            id: String @doc(description: "Query by id.")
+    ) : Blog @resolver( class: "NYX\\Blog\\Model\\Resolver\\Blog") @doc(description: "Query by Get Post.") @cache( cacheIdentity: "NYX\\Blog\\Model\\Resolver\\Blog\\Identity")
+}
+
+type Blog {
+    
+    post_id  : String  @doc(description: "Query by post_id.") 
+    email  : String  @doc(description: "Query by email.") 
+    title  : String  @doc(description: "Query by title.") 
+    details  : String  @doc(description: "Query by details.") 
+    active  : String  @doc(description: "Query by active.") 
+    file  : String  @doc(description: "Query by file.") 
+    created_at  : String  @doc(description: "Query by created_at.") 
+    updated_at  : String  @doc(description: "Query by updated_at.") 
+}
