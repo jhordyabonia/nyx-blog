@@ -1,0 +1,174 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+  div.nyx_post:nth-child(1){
+  }
+}
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) { 
+
+  div.main{
+    .title-head{
+      text-align: center;
+    }
+  }
+  
+  .nyx_post{
+    padding: 12px 25px;
+    border-radius: 15px;
+    border: 1px solid black;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
+   
+    .message{
+      font-weight: 700;
+      padding-left: 10px;
+      &.error{
+        color: red;
+      }
+      &.success{
+        color: green;
+      }
+    }
+    
+    .post-date{
+      float: right;
+    }
+    .post_title {
+      color: @color-blue1;
+      margin-bottom: 8px;
+      font-weight: 700; 
+      display: block;
+    }
+
+    .fetch{
+      width: 80%;
+      display: inline-block;
+      text-align: justify;      
+
+      font-size: 25px;
+      padding: 20px;
+    
+      .post_details{
+        font-size: 1.9rem;
+        font-family: "Magistral";    
+        letter-spacing: .5px;  
+        margin:0px;
+      }
+    }
+
+    div.fetch:nth-child(1){
+      width: 100%;
+    }
+    .post-content{
+      display: inline;
+      padding: 5px;
+      .fields{
+        width: 75%;
+        display: inline-block;
+        margin-right: 20px;
+      }
+      .actions:nth-child(2){
+        button{
+          width: 100%;
+        }
+      }
+      .actions{
+        width: 20%;
+        display: inline-block;
+        float: right;
+      }
+      a{
+        margin: 25px auto;
+        div{
+          width: 200px;
+          height: 250px;
+          display: inline-block;
+          padding: 5px;
+          position: relative;
+          align-items: center;
+          img{
+            position: absolute;
+            width: 100%;
+            top: 15%;
+          }
+        }
+      }
+      .post_details.comment{
+        display: inline;
+        padding: 5px;
+      }
+      display: inline;
+    }
+  
+  }  
+}
+
+
+//  mobil
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+
+  .nyx_post{
+    .post-date{
+      float: right;
+    }
+
+    .fetch{        
+      .post_details{
+        font-size: 1.9rem; 
+        letter-spacing: .5px;  
+        margin:0px;
+      }
+    }
+
+    div.fetch:nth-child(1){
+      width: 100%;
+    }
+    .post-content{
+      display: inline;
+      padding: 5px;
+      .fields{
+        width: 100%;
+        display: inline-block;
+        margin-right: 20px;
+      }
+      .actions:nth-child(2){
+        button{
+          width: 100%;
+        }
+      }
+      .actions{
+        width: auto;
+        display: inline-block;
+        float: none;
+        margin-top: 15px;
+      }
+      a{
+        margin: 25px auto;
+        div{
+          width: 80px;
+          max-height: 100px;
+          display: inline-block;
+          padding: 0px;
+          img{
+            width: 100%;
+          }
+        }
+      }
+      .post_details.comment{
+        display: inline;
+        padding: 5px;
+      }
+      display: inline;
+    }
+  
+  }  
+}

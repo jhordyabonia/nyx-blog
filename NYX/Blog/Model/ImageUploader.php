@@ -2,6 +2,13 @@
 
 namespace NYX\Blog\Model;
 
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Filesystem;       
+use Magento\MediaStorage\Helper\File\Storage\Database as CoreFileStorageDatabase;
+use Magento\MediaStorage\Model\File\UploaderFactory;
+use Magento\Store\Model\StoreManagerInterface;
+use Psr\Log\LoggerInterface;    
+
 class ImageUploader
 {
     private $coreFileStorageDatabase;
@@ -14,14 +21,14 @@ class ImageUploader
     public $allowedExtensions;
 
     public function __construct(
-        \Magento\MediaStorage\Helper\File\Storage\Database $coreFileStorageDatabase,
-        \Magento\Framework\Filesystem $filesystem,
-        \Magento\MediaStorage\Model\File\UploaderFactory $uploaderFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Psr\Log\LoggerInterface $logger
+        CoreFileStorageDatabase $coreFileStorageDatabase,
+        Filesystem $filesystem,
+        UploaderFactory $uploaderFactory,
+        StoreManagerInterface $storeManager,
+        LoggerInterface $logger
     ) {
         $this->coreFileStorageDatabase = $coreFileStorageDatabase;
-        $this->mediaDirectory = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $this->mediaDirectory = $filesystem->getDirectoryWrite(DirectoryList::MEDIA);
         $this->uploaderFactory = $uploaderFactory;
         $this->storeManager = $storeManager;
         $this->logger = $logger;
