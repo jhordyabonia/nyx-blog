@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-	<route url="/V1/nyx-blog/blog" method="POST">
+	<route url="/V1/nyx-blog/post" method="POST">
 		<service class="NYX\Blog\Api\PostRepositoryInterface" method="save"/>
 		<resources>
 			<resource ref="NYX_Blog::save"/>
