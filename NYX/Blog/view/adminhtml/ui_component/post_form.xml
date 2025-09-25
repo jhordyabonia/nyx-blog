@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">post_form.post_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Post Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+
+        <buttons>
+            <button name="save" class="NYX\Blog\Block\Adminhtml\Blog\Edit\SaveButton"/>
+            <button name="save_and_continue" class="NYX\Blog\Block\Adminhtml\Blog\Edit\SaveAndContinueButton"/>
+            <button name="reset" class="NYX\Blog\Block\Adminhtml\Blog\Edit\ResetButton"/>
+            <button name="delete" class="NYX\Blog\Block\Adminhtml\Blog\Edit\DeleteButton"/>
+            <button name="back">
+                <url path="*/*/"/>
+                <class>back</class>
+                <label translate="true">Back</label>
+            </button>
+        </buttons>
+
+        <namespace>post_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>post_form.post_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="post_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="blog/post/save"/>
+        </settings>
+        <dataProvider class="NYX\Blog\Model\Post\DataProvider" name="post_form_data_source">
+            <settings>
+                <requestFieldName>post_id</requestFieldName>
+                <primaryFieldName>post_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <fieldset name="general">
+        <settings>
+            <label/>
+        </settings>
+        <field name="post_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">page</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+                <dataScope>post_id</dataScope>
+            </settings>
+        </field>
+
+        <field name="post_title" sortOrder="0" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">post</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Post Title</label>
+                <dataScope>post_title</dataScope>
+            </settings>
+        </field>
+
+        <field name="post_email" sortOrder="0" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">email</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Post Email</label>
+                <dataScope>post_email</dataScope>
+            </settings>
+        </field>
+
+        <textarea name="post_details" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">post</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Comment</label>
+                <dataScope>post_details</dataScope>
+            </settings>
+        </textarea>
+        <field name="post_is_active" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Is active</label>
+                <dataScope>post_is_active</dataScope>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options>
+                            <option name="0" xsi:type="array">                               
+                                <item name="value" xsi:type="string">0</item>
+                                <item name="label" xsi:type="string" translate="true">Inactive</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">1</item>
+                                <item name="label" xsi:type="string">Active</item>
+                            </option>
+                        </options>
+                        <caption translate="true">-- Please Select --</caption>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+
+        <field name="post_file">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">Post</item>
+                    <item name="label" xsi:type="string" translate="true">File</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">NYX_Blog/image-preview</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="blog/post/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+
+
+    </fieldset>
+</form>
