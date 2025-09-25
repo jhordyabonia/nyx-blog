@@ -103,7 +103,7 @@ class PostRepository implements PostRepositoryInterface
     /**
      * Retrieve post.
      *
-     * @param int $pageId
+     * @param int $postId
      * @return PostInterface
      * @throws LocalizedException
      */

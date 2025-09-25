@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route url="/V1/nyx-blog/blog" method="POST">
+		<service class="NYX\Blog\Api\PostRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="NYX_Blog::save"/>
+		</resources>
+	</route>
+	<route url="/V1/nyx-blog/post/search" method="GET">
+		<service class="NYX\Blog\Api\PostRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="NYX_Blog::view"/>
+		</resources>
+	</route>
+	<route url="/V1/nyx-blog/post/:postId" method="GET">
+		<service class="NYX\Blog\Api\PostRepositoryInterface" method="getById"/>
+		<resources>
+			<resource ref="NYX_Blog::view"/>
+		</resources>
+	</route>
+	<route url="/V1/nyx-blog/post/:postId" method="PUT">
+		<service class="NYX\Blog\Api\PostRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="NYX_Blog::update"/>
+		</resources>
+	</route>
+	<route url="/V1/nyx-blog/post/:postId" method="DELETE">
+		<service class="NYX\Blog\Api\PostRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="NYX_Blog::delete"/>
+		</resources>
+	</route>
+</routes>

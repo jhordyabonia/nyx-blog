@@ -61,6 +61,7 @@ class Post extends AbstractExtensibleModel implements PostInterface
     {
         $out = [__('Inactive'),__('Active')];
         return $out[$this->getData(self::POST_IS_ACTIVE)];
+        #return $this->getData(self::POST_IS_ACTIVE)? 'Active' : 'Inactive';
     }
     
     /**
