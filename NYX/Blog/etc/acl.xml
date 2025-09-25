@@ -9,10 +9,11 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-				<resource id="NYX_Blog::post" sortOrder="10" title="NYX Blog">
-                    <resource id="NYX_Blog::view" title="List and view of Post" sortOrder="110" />
-                    <resource id="NYX_Blog::delete" title="Delete Post" sortOrder="120" />
-                    <resource id="NYX_Blog::save" title="Create Post" sortOrder="130" />
+				<resource id="NYX_Blog::blog" sortOrder="10" title="NYX Blog">
+                    <resource id="NYX_Blog::update" title="Update of Blog" sortOrder="100" />
+                    <resource id="NYX_Blog::view" title="List and view of Blog" sortOrder="110" />
+                    <resource id="NYX_Blog::delete" title="Delete Blog" sortOrder="120" />
+                    <resource id="NYX_Blog::save" title="Create Blog" sortOrder="130" />
                 </resource>
             </resource>
         </resources>
