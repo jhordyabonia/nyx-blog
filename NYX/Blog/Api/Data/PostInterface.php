@@ -11,7 +11,7 @@ interface PostInterface
     const POST_DETAILS = 'post_details';
     const POST_FILE = 'post_file';
     const POST_EMAIL = 'post_email';
-    const POST_IS_ACTIVE = 'is_active';
+    const POST_IS_ACTIVE = 'post_is_active';
 
     /**
      * @return string
