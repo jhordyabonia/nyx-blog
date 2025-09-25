@@ -7,26 +7,29 @@
 
 namespace NYX\Blog\Block\Adminhtml\Blog\Edit;
 
+use Magento\Backend\Block\Widget\Context;
+use NYX\Blog\Api\PostRepositoryInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class GenericButton
 {
     /**
-     * @var \Magento\Backend\Block\Widget\Context
+     * @var Context
      */
     protected $context;
     /**
-     * @var \NYX\Blog\Api\PostRepositoryInterface
+     * @var PostRepositoryInterface
      */
     protected $postRepository;
 
     /**
      * GenericButton constructor.
-     * @param \Magento\Backend\Block\Widget\Context $context
-     * @param \NYX\Blog\Api\PostRepositoryInterface $postRepository
+     * @param Context $context
+     * @param PostRepositoryInterface $postRepository
      */
     public function __construct(
-        \Magento\Backend\Block\Widget\Context $context,
-        \NYX\Blog\Api\PostRepositoryInterface $postRepository
+        Context $context,
+        PostRepositoryInterface $postRepository
     ) {
 
         $this->context = $context;
@@ -44,7 +47,7 @@ class GenericButton
             return $this->postRepository->getById(
                 $this->context->getRequest()->getParam('post_id')
             )->getId();
-        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+        } catch (NoSuchEntityException $e) {
         }
         return null;
     }
