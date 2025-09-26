@@ -107,8 +107,29 @@
       }
       display: inline;
     }
+    p.post_comments {
+      color:  @color-blue1;;
+      float: right;
+      cursor: pointer;
+    }
   
   }  
+
+  .wrap-modal-flex {
+    header.modal-header {
+        display: none;
+    }
+
+    footer.modal-footer {display: none;}
+
+
+    .modal-popup._inner-scroll .modal-content {
+      overflow-y: auto;
+      min-height: 80vh;
+    }
+  }
+  
+
 }
 
 

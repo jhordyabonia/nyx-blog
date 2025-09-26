@@ -2,12 +2,19 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
-        <add id="NYX_Blog::post"
-             title="Blog NYX" translate="title"
+        <add id="NYX_Blog::blog_post"
+             title="Blog NYX (Posts)" translate="title"
              module="NYX_Blog" sortOrder="80"
              parent="Magento_Backend::content_elements"
              action="blog/post/index"
-             resource="NYX_Blog::post"/>
+             resource="NYX_Blog::blog"/>
+
+        <add id="NYX_Blog::blog_comment"
+             title="Blog NYX (Comments)" translate="title"
+             module="NYX_Blog" sortOrder="80"
+             parent="Magento_Backend::content_elements"
+             action="blog/comment/index"
+             resource="NYX_Blog::blog"/>
 
         <!--<remove id="Magento_Marketplace::partners"/>-->
         <!--<update id="Magento_Backend::content_elements" parent="Magento_Catalog::catalog"/>-->

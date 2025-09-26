@@ -3,6 +3,7 @@
 namespace NYX\Blog\Model;
 
 use Magento\Framework\Exception\CouldNotDeleteException;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use NYX\Blog\Api\PostRepositoryInterface;
 use NYX\Blog\Model\ResourceModel\Post;

@@ -8,22 +8,24 @@ declare(strict_types=1);
  */
 namespace NYX\Blog\Controller\Post;
 
+
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\App\CsrfAwareActionInterface;
-use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\App\RequestInterface;
+use NYX\Blog\Model\PostFactory;
 
-class Get extends \Magento\Framework\App\Action\Action implements CsrfAwareActionInterface
+class Get implements HttpGetActionInterface, CsrfAwareActionInterface
 {
-    protected $resultPageFactory;   
-    public function __construct(        
-        \NYX\Blog\Model\PostFactory $postFactory,
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
+    public function __construct(
+        private PostFactory $postFactory,
+        private JsonFactory $jsonResultFactory,
+        private RequestInterface $request
     ) {
-        $this->postFactory = $postFactory;
-        $this->jsonResultFactory = $jsonResultFactory;
-        parent::__construct($context);
     }
 
     /**

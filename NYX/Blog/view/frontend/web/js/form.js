@@ -3,9 +3,10 @@ define([
     'jquery',
     'ko',
     'Magento_Checkout/js/model/error-processor',
+    'NYXBlog_comment',
     'uiComponent'
 ],
-function (Url,$, ko, errorProcessor, Component) {
+function (Url,$, ko, errorProcessor,comments, Component) {
     'use strict';
     return Component.extend ({
         defaults: {
@@ -14,7 +15,8 @@ function (Url,$, ko, errorProcessor, Component) {
             title: ko.observable(''),
             email: ko.observable(''),
             comment: ko.observable(''),
-            postList: ko.observableArray([])
+            postList: ko.observableArray([]), 
+            popupComments: comments().initialize()
         },
         initialize: function () {
             this._super();
@@ -22,7 +24,7 @@ function (Url,$, ko, errorProcessor, Component) {
             this.message.subscribe(this.hideMesaage,this);            
             return this;
         },
-        hideMesaage(){
+        hideMesaage:function(){
             setTimeout(function(form){
                 form.message('');
             },4500,this);
@@ -46,10 +48,10 @@ function (Url,$, ko, errorProcessor, Component) {
                 errorProcessor.process(error);
             });
         },   
-        getUrl(uri){
+        getUrl:function(uri){
             return Url.build(window.URL_MEDIA+uri);
         },
-        validateEmail(){
+        validateEmail:function(){
             let email = this.email();
             if(email.length == 0){
                 return false;
@@ -66,13 +68,13 @@ function (Url,$, ko, errorProcessor, Component) {
             }
             return email;
         },
-        canSend(){
+        canSend:function(){
             this.message('');
             return this.title()
                     &&this.comment()
                     &&this.validateEmail();
         },
-        getData(){
+        getData:function(){
             var data ={
             'post_title':this.title(),
             'post_details':this.comment(),

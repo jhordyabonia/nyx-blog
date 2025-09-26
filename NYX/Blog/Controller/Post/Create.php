@@ -13,25 +13,31 @@ use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
 
-class Create extends \Magento\Framework\App\Action\Action implements CsrfAwareActionInterface
+use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\App\Action\Context;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Framework\App\Action\HttpGetActionInterface;
+use Magento\Framework\Controller\ResultInterface;
+use NYX\Blog\Model\PostFactory;
+use Magento\Framework\App\Request\DataPersistorInterface;
+
+use Magento\Framework\Message\ManagerInterface;
+use NYX\Blog\Model\CommentFactory;
+use NYX\Blog\Model\ImageUploader;
+
+class Create implements HttpPostActionInterface, CsrfAwareActionInterface
 {
     private $error = false;
-
     public function __construct(
-        \Magento\Framework\App\Request\DataPersistorInterface $dataPersistor,
-        \Magento\Framework\Message\ManagerInterface $messageManager,
-        \NYX\Blog\Model\PostFactory $postFactory,
-        \NYX\Blog\Model\ImageUploader $imageUploader,
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\JsonFactory $jsonResultFactory
-    ) {
-        $this->jsonResultFactory = $jsonResultFactory;
-        $this->dataPersistor = $dataPersistor;
-        $this->imageUploader = $imageUploader;
-        $this->messageManager = $messageManager;
-        $this->postFactory = $postFactory;
-        parent::__construct($context);
-    }
+        private PostFactory $postFactory,
+        private RequestInterface $request,
+        private DataPersistorInterface $dataPersistor,
+        private ManagerInterface $messageManager,
+        private CommentFactory $commentFactory,
+        private Context $context,
+        private JsonFactory $jsonResultFactory,
+        private ImageUploader $imageUploader,
+    ) {}
 
     /**
      * validateData function
@@ -40,8 +46,8 @@ class Create extends \Magento\Framework\App\Action\Action implements CsrfAwareAc
      * @return array
      */
     private function validateData(){
-        $data = json_decode($this->getRequest()->getContent(),true);
-        
+        $data = json_decode($this->request->getContent(),true);
+
         if(!isset($data['post_title'])){
             $this->error = __("error, title is should empty!");
         }
