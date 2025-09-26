@@ -3,36 +3,63 @@ define([
     'jquery',
     'ko',
     'Magento_Checkout/js/model/error-processor',
-    'NYXBlog_comment',
+    'Magento_Ui/js/modal/modal',
     'uiComponent'
 ],
-function (Url,$, ko, errorProcessor,comments, Component) {
+function (Url,$, ko, errorProcessor, modal,Component) {
     'use strict';
     return Component.extend ({
         defaults: {
             message: ko.observable(''),
             messageClass: ko.observable(''),
-            title: ko.observable(''),
-            email: ko.observable(''),
-            comment: ko.observable(''),
-            postList: ko.observableArray([]), 
-            popupComments: comments().initialize()
+            post_id: ko.observable(''),
+            comment_autor: ko.observable(''),
+            comment_body: ko.observable(''),
+            commentList: ko.observableArray([]),
+            modal:null
         },
         initialize: function () {
             this._super();
-            this.getPosts();
-            this.message.subscribe(this.hideMesaage,this);            
+            this.message.subscribe(this.hideMessage,this);     
+            this.post_id.subscribe(this.getComments,this);
+            this.makePopup() 
             return this;
         },
-        hideMesaage:function(){
+        hideMessage:function(){
             setTimeout(function(form){
                 form.message('');
             },4500,this);
         },
-        getPosts: function() {
-            this.postList([]);
+        makePopup:function(){
+            if(this.modal){
+                return;
+            }
+            let _self = this
+            let options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                clickableOverlay: false,
+                modalClass: 'wrap-modal-flex',
+                title: '',
+                buttons: [{
+                    text: $.mage.__('Cerrar'),
+                    class: 'action primary btn-popup-store-pickup',
+                    click: function () {
+                        _self.modal.closeModal();
+                    }
+                }]
+            };       
+
+            this.modal = modal(options, $('.comment-list-wrapper'));
+        },
+        isActive:function() {
+            return this.storePickupSelected();
+        },
+        getComments: function() {
+            this.commentList([]);
             let _self = this;
-            let url = Url.build('blog/post/get');
+            let url = Url.build('blog/comment/get?post_id='+this.post_id());
             let request = {method: 'GET'};
 
             $('body').trigger('processStart');
@@ -41,38 +68,25 @@ function (Url,$, ko, errorProcessor,comments, Component) {
                 $('body').trigger('processStop');
                 if (result.ok) {
                     result.json().then((resultJSON) => {
-                        resultJSON.forEach(post => _self.postList.push(post));
+                        resultJSON.forEach(post => _self.commentList.push(post));
                     });
+                    
+                    if(_self.modal){
+                       $('.comment-list-wrapper').modal('openModal');
+                    }
                 }
             }).catch((error) => {
                 errorProcessor.process(error);
             });
+            return this
         },   
         getUrl:function(uri){
             return Url.build(window.URL_MEDIA+uri);
         },
-        validateEmail:function(){
-            let email = this.email();
-            if(email.length == 0){
-                return false;
-            }
-            if(email.indexOf('@')==-1){
-                this.message('Invalid Email, email is should to have "@"');
-                this.messageClass('message error');
-                return false;
-            }
-            if(!email.indexOf('.')==-1){
-                this.message('Invalid Email, use like jhondoe@test.com');
-                this.messageClass('message error');
-                return false;
-            }
-            return email;
-        },
         canSend:function(){
             this.message('');
             return this.title()
-                    &&this.comment()
-                    &&this.validateEmail();
+                    &&this.comment();
         },
         getData:function(){
             var data ={
@@ -90,7 +104,7 @@ function (Url,$, ko, errorProcessor,comments, Component) {
         },
         submit: function() {
             let _self = this;
-            let url = Url.build('blog/post/create');
+            let url = Url.build('blog/comment/create');
             let request = {
                 method: 'POST',
                 headers: {'Content-Type' : 'application/json'},
@@ -103,10 +117,10 @@ function (Url,$, ko, errorProcessor,comments, Component) {
                     (_request) => {
                         $('body').trigger('processStop');
                         if(_request.ok){
-                            _self.title('');
-                            _self.email('');
-                            _self.comment('');
-                            _self.getPosts();
+                            _self.comment_autor('');
+                            _self.comment_body('');
+                            //_self.comment_id('');
+                            _self.getComments();
                             _self.message(_request.message);
                             _self.messageClass('message success');
                         }else{
@@ -119,6 +133,6 @@ function (Url,$, ko, errorProcessor,comments, Component) {
                 _self.message(error);
                 _self.messageClass('message error');
             });
-        }       
+        }    
     });
 });

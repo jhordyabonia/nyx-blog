@@ -56,4 +56,18 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <type name="NYX\Blog\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">PostLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="handler" xsi:type="object">NYX\Blog\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="NYX\Blog\Api\PostRepositoryInterface">
+        <plugin name="comment_post_plugin" type="NYX\Blog\Plugin\PostRepository"/>
+    </type>
+
 </config>

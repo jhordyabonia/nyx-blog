@@ -6,23 +6,22 @@ declare(strict_types=1);
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace NYX\Blog\Controller\Post;
-
+namespace NYX\Blog\Controller\Comment;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\App\CsrfAwareActionInterface;
 use Magento\Framework\App\Request\InvalidRequestException;
+use NYX\Blog\Model\CommentFactory;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultInterface;
 use Magento\Framework\App\RequestInterface;
-use NYX\Blog\Model\PostFactory;
 
 class Get implements HttpGetActionInterface, CsrfAwareActionInterface
 {
     public function __construct(
-        private PostFactory $postFactory,
+        private CommentFactory $commentFactory,
         private JsonFactory $jsonResultFactory,
         private RequestInterface $request
     ) {
@@ -30,18 +29,21 @@ class Get implements HttpGetActionInterface, CsrfAwareActionInterface
 
     /**
      * getCollection function
-     * List active Post
+     * List active Comment
      *
      * @return Collection
      */
     public function getCollection()
     {        
-        $postCollection = $this->postFactory->create()->getCollection();
-        $postCollection->addFieldToSelect('*')
-                        ->addFieldToFilter('post_is_active',1)
-                        ->setOrder('post_id','desc');          
-        
-        return $postCollection;
+
+        $postId = $this->request->getParam('post_id');
+        $commentCollection = $this->commentFactory->create()->getCollection();
+        $commentCollection->addFieldToSelect('*')
+                        ->addFieldToFilter('post_id',$postId)
+                        ->addFieldToFilter('is_approved',1)
+                        ->setOrder('comment_id','desc');
+
+        return $commentCollection;
     }
     /**
      * Show Blog page

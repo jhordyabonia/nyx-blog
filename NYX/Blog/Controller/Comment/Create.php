@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-namespace NYX\Blog\Controller\Post;
+namespace NYX\Blog\Controller\Comment;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\App\CsrfAwareActionInterface;
@@ -35,8 +35,7 @@ class Create implements HttpPostActionInterface, CsrfAwareActionInterface
         private ManagerInterface $messageManager,
         private CommentFactory $commentFactory,
         private Context $context,
-        private JsonFactory $jsonResultFactory,
-        private ImageUploader $imageUploader,
+        private JsonFactory $jsonResultFactory
     ) {}
 
     /**
@@ -48,22 +47,23 @@ class Create implements HttpPostActionInterface, CsrfAwareActionInterface
     private function validateData(){
         $data = json_decode($this->request->getContent(),true);
 
-        if(!isset($data['post_title'])){
-            $this->error = __("error, title is should empty!");
-        }
-
-        if(!isset($data['post_email'])){
-            $this->error = __("error, email is should empty!");
+        if(!isset($data['comment_body'])){
+            $this->error = __("error, body is should empty!");
         }
         
-        if(!isset($data['post_details'])){
-            $this->error = __("error, comment is should empty!");
+        if(!isset($data['comment_author'])){
+            $this->error = __("error, author is should empty!");
         }
+        
+        if(!isset($data['post_id'])){
+            $this->error = __("error, post_id is should empty!");
+        }
+
         if($this->error){
             $this->messageManager->addErrorMessage($this->error);
             return false;
         }
-        $data['post_is_active'] = 1;
+        $data['is_approved'] = 0;
 
         unset($data['form_key']);
         return $data;
@@ -78,21 +78,18 @@ class Create implements HttpPostActionInterface, CsrfAwareActionInterface
             return $this->jsonResultFactory->create()->setData(['ok'=>false,'message'=>$this->error]);                       
         }
 
-        $post = $this->postFactory->create();
-        $post->setData($data);
+        $comment = $this->commentFactory->create();
+        $comment->setData($data);
 
         try{
-            $post->save();
-            $this->messageManager->addSuccessMessage(__("Success! Post saved, await up it  review"));
-            $this->dataPersistor->set('post',$post->getData());
-            if(isset($data['post_file'])){
-                $this->imageUploader->saveFileToTmpDir('post_file');
-            }
+            $comment->save();
+            $this->messageManager->addSuccessMessage(__("Success! Comment saved, await up it  review"));
+            $this->dataPersistor->set('comment',$comment->getData());
         }catch(\Exception $e){
             $this->messageManager->addErrorMessage($e->getMessage());
             return $this->jsonResultFactory->create()->setData(['ok'=>false,'message'=>$e->getMessage()]);        
         }        
-        return $this->jsonResultFactory->create()->setData(['ok'=>true,'message'=>'Success! Post saved, await up it  review']);              
+        return $this->jsonResultFactory->create()->setData(['ok'=>true,'message'=>'Success! Comment saved, await up it  review']);              
     }
 
     public function _isAllowed(){
