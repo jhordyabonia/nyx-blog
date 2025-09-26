@@ -6,8 +6,9 @@ use NYX\Blog\Api\Data\PostInterface;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Exception\LocalizedException;
 use NYX\Blog\Model\ResourceModel\Post as PostResource;
+use Magento\Eav\Model\Entity\EntityInterface;
 
-class Post extends AbstractExtensibleModel implements PostInterface
+class Post extends AbstractExtensibleModel implements PostInterface, EntityInterface
 {
 
     protected function _construct()

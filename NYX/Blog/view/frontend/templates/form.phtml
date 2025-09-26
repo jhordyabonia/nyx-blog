@@ -7,7 +7,7 @@
         <div class="post-content">
             <div class="fields">
                 <div class="field name required">
-                    <label class="label" for="title"><span  data-bind="i18n:('New Post Title')"><</span></label>
+                    <label class="label" for="title"><span  data-bind="i18n:('New Post Title')"></span></label>
                     <div class="control">
                         <input name="post_title" id="title" attr="{placeholder:'New Post Title'}" autocomplete="false"
                             class="input-text" type="text" data-bind="value:title" required />
@@ -67,10 +67,53 @@
             <div class="fetch">
                 <p class="post_details comment" data-bind="i18n:($data.post_details)"></p>
             </div>
+            <div class="comments">
+                <p class="post_comments" data-bind="click:()=>$parent.popupComments.post_id($data.post_id)" >
+                    <span data-bind="i18n:'Comments:'"></span> &nbsp; <span data-bind="text: $data.post_id"></span>
+                </p>
+            </div>
         </div>
     </div>
     <!-- /ko -->
     <!-- /ko -->
+    <div class="comment-list-wrapper nyx_post" data-bind="visible: popupComments.post_id">
+        <div class="comment-head">
+            <h2 class="title" data-bind="text: $t('Do Comment')"></h2>                                    
+            <div class="fields">
+                <div class="field comment_body required">
+                    <label class="label" for="title"><span  data-bind="i18n:('New Comment')"></span></label>
+                    <div class="control">
+                        <input name="comment_body" id="title" attr="{placeholder:'your comment'}" autocomplete="false"
+                            class="input-text" type="text" data-bind="value:popupComments.comment_body" required />
+                    </div>
+                </div>
+
+                <div class="field author">
+                    <label class="label" for="author"><span  data-bind="i18n:('Author')"></span></label>
+                    <div class="control">
+                        <input name="post_email" id="author" attr="{placeholder:'Author'}" data-bind="value:popupComments.comment_author" autocomplete="false"
+                            class="input-text" type="text" required />
+                    </div>
+                </div>
+            </div> 
+            <div class="actions">
+                <button class="action primary" data-bind="click:popupComments.submit">
+                    <span data-bind="i18n:'Send'"></span>
+                </button>
+            </div>
+        </div>
+        <!-- ko foreach: popupComments.commentList -->
+            <div class="comment-content">
+                <div class="comment-body">                    
+                    <span data-bind="i18n:$data.comment_body" ></span>
+                </div>
+                <div class="comment-footer">                                            
+                    <span class="comment-author" data-bind="i18n:$data.comment_author"></span>
+                    <span class="comment-created_at" data-bind="i18n:$data.created_at" ></span>
+                </div>
+            </div>
+        <!-- /ko -->
+    </div>
 </div>
 
 <script type="text/javascript">

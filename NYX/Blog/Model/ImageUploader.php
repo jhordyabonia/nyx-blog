@@ -8,7 +8,7 @@ use Magento\MediaStorage\Helper\File\Storage\Database as CoreFileStorageDatabase
 use Magento\MediaStorage\Model\File\UploaderFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;    
-
+use Magento\Framework\App\Filesystem\DirectoryList;
 class ImageUploader
 {
     private $coreFileStorageDatabase;

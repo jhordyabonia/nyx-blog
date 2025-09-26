@@ -11,6 +11,15 @@
             </argument>
         </arguments>
     </type>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <!-- configuracion de la coleccion para el dataProvider-->
+                <item name="comment_listing_data_source" xsi:type="string">NYX\Blog\Model\ResourceModel\Comment\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
 
 
     <preference for="NYX\Blog\Api\Data\PostSearchResultsInterface"
@@ -21,6 +30,16 @@
 
     <preference for="NYX\Blog\Api\PostRepositoryInterface"
                 type="\NYX\Blog\Model\PostRepository"/>
+
+
+    <preference for="NYX\Blog\Api\Data\CommentSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults" />
+
+    <preference for="NYX\Blog\Api\Data\CommentInterface"
+                type="NYX\Blog\Model\Comment"/>
+
+    <preference for="NYX\Blog\Api\CommentRepositoryInterface"
+                type="\NYX\Blog\Model\CommentRepository"/>
 
     <virtualType name="AppearanceYESNO" type="Magento\Framework\Data\OptionSourceInterface">
         <arguments>
@@ -37,4 +56,18 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <type name="NYX\Blog\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">PostLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="handler" xsi:type="object">NYX\Blog\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="NYX\Blog\Api\PostRepositoryInterface">
+        <plugin name="comment_post_plugin" type="NYX\Blog\Plugin\PostRepository"/>
+    </type>
+
 </config>

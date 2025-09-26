@@ -1,0 +1,48 @@
+<?php
+
+namespace NYX\Blog\Model\ResourceModel\Comment\Grid;
+
+
+use Magento\Customer\Ui\Component\DataProvider\Document;
+use Magento\Framework\Data\Collection\Db\FetchStrategyInterface as FetchStrategy;
+use Magento\Framework\Data\Collection\EntityFactoryInterface as EntityFactory;
+use Magento\Framework\Event\ManagerInterface as EventManager;
+use Psr\Log\LoggerInterface as Logger;
+use NYX\Blog\Model\ResourceModel\Comment as CommentResource;
+use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult\Interceptor;
+use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
+
+class Collection extends  SearchResult
+{
+    /**
+     * @inheritdoc
+     */
+    protected $document = Document::class;
+
+    /**
+     * @inheritdoc
+     */
+    protected $_map = ['fields' => ['entity_id' => 'main_table.entity_id']];
+
+    /**
+     * Initialize dependencies.
+     *
+     * @param EntityFactory $entityFactory
+     * @param Logger $logger
+     * @param FetchStrategy $fetchStrategy
+     * @param EventManager $eventManager
+     * @param string $mainTable
+     * @param string $resourceModel
+     */
+    public function __construct(
+        EntityFactory $entityFactory,
+        Logger $logger,
+        FetchStrategy $fetchStrategy,
+        EventManager $eventManager,
+        $mainTable = 'nyx_blog_post_comment',
+        $resourceModel = CommentResource::class
+    )
+    {
+        parent::__construct($entityFactory, $logger, $fetchStrategy, $eventManager, $mainTable, $resourceModel);
+    }
+}
